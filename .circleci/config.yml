@@ -45,7 +45,8 @@ jobs:
       - run:
           name: run tests
           command: |
-            python -v
+            cd tests
+            sudo python public_user_credit_purchases.py
             dir
 
       - store_artifacts:
