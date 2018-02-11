@@ -34,18 +34,22 @@ class PublicUserPurchaseTransactions(unittest.TestCase):
             self.driver.get("%s"%td.test_url)
             self.cf.login(self.driver, td.test_admin_username, td.test_admin_password)
             self.cf.change_price_pkg(self.driver, td.test_pkg1)
+            self.cf.screenshot(self.api_session, self.id, "Change of package1")
+            self.driver.get("%s"%td.test_url)
+            self.cf.logout(self.driver)
+            
+            self.driver.get("%s"%td.test_url)
+            self.driver.find_element_by_xpath("//header[@id='footer']/div/a[1]/img").click()
+            self.cf.screenshot(self.api_session, self.id, "Home screen")
+            
+            if len(self.driver.find_elements_by_xpath("//div[@class='modal-content']")) > 0:
+                time.sleep(2)
+            
+            package1 = self.driver.find_element_by_xpath("//div[@class='modal-content']/div[@class='modal-body']/div/div[1]/a")
+            print package1.text
+            self.cf.screenshot(self.api_session, self.id, "Package1 Dialog")
             
             
-            
-            # self.driver.find_element_by_xpath("//header[@id='footer']/div/a[1]/img")
-            
-            # if len(self.driver.find_elements_by_xpath("//div[@class='modal-content']")) > 0:
-                # time.sleep(2)
-            
-            # package1 = self.driver.find_element_by_xpath("//div[@class='modal-content']/div[@class='modal-body']/div/div[1]/a")
-            
-
-            self.cf.screenshot(self.api_session, self.id, "initial screenshot")
             self.test_result = 'pass'
 
         except AssertionError as e:

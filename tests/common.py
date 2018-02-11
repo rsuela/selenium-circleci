@@ -19,10 +19,13 @@ class common_functionalities:
         driver.find_element_by_xpath("//form[@id='loginform']/div/div/div[1]/label").click()
         driver.find_element_by_id("wp_submit").click()
     
-    # def logout(self):
-    
-    
-    
+    def logout(self, driver):
+        driver.find_element_by_xpath("//header[@id='header']/div/div/div/i").click()
+        
+        driver.find_element_by_link_text("Log out").click()
+        if len(driver.find_elements_by_link_text("log out")) != 0:
+            driver.find_element_by_link_text("log out").click()
+
     def change_price_pkg(self, driver, pkg):
         driver.get(pkg['PKGURL'])
         
