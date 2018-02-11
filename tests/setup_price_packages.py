@@ -8,15 +8,14 @@ import common
 import time
 import sys
 
-class PublicUserPurchaseTransactions(unittest.TestCase):
+class SetupPricePackages(unittest.TestCase):
     cf =  common.common_functionalities()
-    
     
     def setUp(self):
         self.api_session = requests.Session()
         self.api_session.auth = (cfg.cbt_username,cfg.cbt_authkey)
         self.test_result = None
-        cfg.caps['name'] = "Public User Purchase transactions"
+        cfg.caps['name'] = "setup price packages"
         self.driver = webdriver.Remote(
             desired_capabilities=cfg.caps,
             command_executor="http://%s:%s@hub.crossbrowsertesting.com:80/wd/hub"%(cfg.cbt_username,cfg.cbt_authkey)
@@ -26,23 +25,15 @@ class PublicUserPurchaseTransactions(unittest.TestCase):
         self.driver.implicitly_wait(20)
         self.id = self.driver.session_id
         logging.basicConfig(filename="%s.log"%(self.__class__.__name__),level=logging.DEBUG,format="%(asctime)s:%(levelname)s:%(message)s")
-        
+    
     def test_validate_usd_purchase_pkg1(self):
         '''Validate public user purchase with USD currency and using VISA credit card'''
         try:
-            # We need to make sure that price packages are set based on test data
             self.driver.get("%s"%td.test_url)
-            self.cf.login(self.driver, td.test_admin_username, td.test_admin_password)
-            self.cf.change_price_pkg(self.driver, td.test_pkg1)
+            self.cf.login(self.driver, td.test_username, td.test_password)
+            self.cf.change_price_pkg(td.test_pkg1)
             
-            
-            
-            # self.driver.find_element_by_xpath("//header[@id='footer']/div/a[1]/img")
-            
-            # if len(self.driver.find_elements_by_xpath("//div[@class='modal-content']")) > 0:
-                # time.sleep(2)
-            
-            # package1 = self.driver.find_element_by_xpath("//div[@class='modal-content']/div[@class='modal-body']/div/div[1]/a")
+
             
 
             self.cf.screenshot(self.api_session, self.id, "initial screenshot")

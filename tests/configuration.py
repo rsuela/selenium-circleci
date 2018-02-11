@@ -15,8 +15,4 @@ class config:
     caps['platformName']        = 'Android'
     caps['deviceOrientation']   = 'portrait'
     
-    # 247friend Specific
-    test_url                    = "http://qa.247friend.org/"
-    test_username               = "admin-qa@247friend.org"
-    test_password               = "fTkYU7U)!yj1n1c%o&usCp5"
     
