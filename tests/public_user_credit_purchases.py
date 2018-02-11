@@ -1,6 +1,10 @@
-from appium import webdriver
+from selenium.webdriver.support.ui import Select
 from configuration import config as cfg
+from appium import webdriver
 from testdata import data as td
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 import unittest
 import requests
 import logging
@@ -46,10 +50,55 @@ class PublicUserPurchaseTransactions(unittest.TestCase):
                 time.sleep(2)
             
             package1 = self.driver.find_element_by_xpath("//div[@class='modal-content']/div[@class='modal-body']/div/div[1]/a")
-            print package1.text
+            print "Assert package \nExpected: %s %s \nLive: %s" %(td.test_pkg1['USD'], "USD", package1.text.encode('ascii', 'ignore'))
+            self.assertEqual("%s %s"%(td.test_pkg1['USD'], "USD"), package1.text.encode('ascii', 'ignore'))
             self.cf.screenshot(self.api_session, self.id, "Package1 Dialog")
             
+            package1.click()
+            self.cf.screenshot(self.api_session, self.id, "Checkout Page")
             
+            # Checkout page
+            print "Checkout page"
+            print "First name: %s"%(td.user1['name'])
+            self.driver.find_element_by_id("user_first_name").send_keys(td.user1['name'])
+            print "Surname: %s"%(td.user1['surname'])
+            self.driver.find_element_by_id("user_last_name").send_keys(td.user1['surname'])
+            print "Email Address: %s"%(td.user1['email'])
+            self.driver.find_element_by_id("email_address").send_keys(td.user1['email'])
+            self.cf.screenshot(self.api_session, self.id, "Email Address")
+            self.driver.find_element_by_id("email_re").send_keys(td.user1['email'])
+            self.cf.screenshot(self.api_session, self.id, "Confirm Email Address")
+            print "Mobile: %s"%(td.user1['mobile'])
+            self.driver.find_element_by_id("phoneNumber").send_keys(td.user1['mobile'])
+            self.cf.screenshot(self.api_session, self.id, "Checkout Page with details")
+            
+            
+            self.driver.find_element_by_id("countries_timezones2").click()
+            for country in self.driver.find_elements_by_xpath("//div[@class='bfh-selectbox-options']/div/ul/li/a"):
+                if country.text.encode('ascii', 'ignore').lower() == td.user1['country'].lower():
+                    print "Selected %s"%(country.text.encode('ascii', 'ignore').lower())
+                    country.click()
+                    time.sleep(1) # to populate the timezone
+                    break
+            
+            self.driver.find_element_by_id("timezone").click()
+            for timezone in self.driver.find_elements_by_xpath("//div[@id='timezone']/div[@class='bfh-selectbox-options']/div/ul/li/a"):
+                if td.user1['timezone'].lower() in timezone.text.encode('ascii', 'ignore').lower():
+                    print "Selected %s"%(timezone.text.encode('ascii', 'ignore'))
+                    timezone.click()
+                    break
+            self.cf.screenshot(self.api_session, self.id, "Checkout Page with details")
+            self.driver.find_element_by_id("suburb").send_keys(td.user1['suburb'])
+            self.driver.find_element_by_id("user_city").send_keys(td.user1['city'])
+            self.driver.find_element_by_id("card_number").send_keys(td.user1['creditcard'])
+            self.driver.find_element_by_id("card_name").send_keys("%s %s"%(td.user1['name'], td.user1['surname']))
+            self.driver.find_element_by_id("cvv").send_keys(td.user1['cvv'])
+            self.driver.find_element_by_id("terms").click()
+            print "Submitting form"
+            self.driver.find_element_by_id("check_out_buy_now_button").click()
+            
+            WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "checkoutResultSucess")))
+            print "Result Message: %s"%(self.driver.find_element_by_xpath("//span[@id='Seamless_ReportBugForm_expected_results']/span[@class='seamless-view msgForNonLoggedIn']").text.encode('ascii', 'ignore'))
             self.test_result = 'pass'
 
         except AssertionError as e:

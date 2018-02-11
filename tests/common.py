@@ -12,6 +12,7 @@ class common_functionalities:
         data={'action':'set_score', 'score':result})
     
     def login(self, driver, username, password):
+        print "Loging using %s" %(username)
         driver.find_element_by_xpath("//header[@id='header']/div/div/div/i").click()
         driver.find_element_by_link_text("Log in").click()
         driver.find_element_by_id("email_address").send_keys(username)
@@ -20,6 +21,7 @@ class common_functionalities:
         driver.find_element_by_id("wp_submit").click()
     
     def logout(self, driver):
+        print "Logging out"
         driver.find_element_by_xpath("//header[@id='header']/div/div/div/i").click()
         
         driver.find_element_by_link_text("Log out").click()
@@ -27,6 +29,7 @@ class common_functionalities:
             driver.find_element_by_link_text("log out").click()
 
     def change_price_pkg(self, driver, pkg):
+        print "Changing package price"
         driver.get(pkg['PKGURL'])
         
         if len(driver.find_elements_by_xpath("//form[@name='add_new_package']/table")) > 0:
@@ -52,3 +55,6 @@ class common_functionalities:
         
         driver.find_element_by_xpath("//table[@id='price_fields']/tbody/tr[2]/td[1]/h3").click()
         driver.find_element_by_xpath("//table[@id='price_fields']/tbody/tr[3]/td[2]/button").click()
+        
+    def read_email():
+        print "Accessing email account"

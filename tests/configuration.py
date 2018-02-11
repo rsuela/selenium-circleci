@@ -2,8 +2,8 @@
 
 class config:
     # CrossBrowserTesting
-    cbt_username                = "jhudson.953bot@gmail.com"
-    cbt_authkey                 = "u6273fa5b70e34de"
+    cbt_username                = "jmckinly95@gmail.com"
+    cbt_authkey                 = "uf89977e3f05f481"
     selenium_api_url            = "https://crossbrowsertesting.com/api/v3/selenium/"
     
     # Capabilities

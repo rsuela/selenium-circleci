@@ -6,10 +6,35 @@ class data:
     test_url                    = "https://qa.247friend.org"
     test_client_username        = "admin-qa@247friend.org"
     test_client_password        = "fTkYU7U)!yj1n1c%o&usCp5"
-    test_coach_username         = "admin-qa@247friend.org"
-    test_coach_password         = "fTkYU7U)!yj1n1c%o&usCp5"
+    test_coach_username         = "jhudson.953bot@gmail.com"
+    test_coach_password         = "123qweasd"
     test_admin_username         = "admin-qa@247friend.org"
     test_admin_password         = "fTkYU7U)!yj1n1c%o&usCp5"
+    
+    # Details
+    user1                       = {'name'       : 'James',
+                                   'surname'    : 'Mckinly',
+                                   'email'      : 'jmckinly95@gmail.com',
+                                   'password'   : 'j@m3s1001mckinly',
+                                   'mobile'     : '234345678',
+                                   'country'    : 'New Zealand',
+                                   'timezone'   : 'auckland',
+                                   'suburb'     : 'tawa',
+                                   'city'       : 'wellington',
+                                   'creditcard' : '4012888888881881',
+                                   'cvv'        : '000'
+                                  }
+        
+    card_visa1                  = "4012888888881881"
+    card_visa2                  = "4111111111111111"
+    card_discover1              = "6011000990139424"
+    card_discover2              = "6011111111111117"
+    card_mastercard1            = "5105105105105100"
+    card_mastercard2            = "5555555555554444"
+    
+    cvv                         = "000"
+    
+    
     
     test_pkg1                   = {'PKGURL' : "%s/wp-admin/admin.php?page=edit-new-package&package_id=6"%(test_url),
                                    'USD'    : '99',
