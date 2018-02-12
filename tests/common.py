@@ -3,6 +3,15 @@ from configuration import config as cfg
 import time
 
 class common_functionalities:
+    def wait_till_visible(self, element):
+        max_wait = 10
+        while(len(element) > 0):
+            time.sleep(0.5)
+            if max_wait == 0:
+                break
+            max_wait -= 1
+        print "Element now visible"
+
     def screenshot(self, api_session, id, desc):
         snapshot_hash = api_session.post(cfg.selenium_api_url + id + '/snapshots').json()['hash']
         api_session.put(cfg.selenium_api_url + id + '/snapshots/' + snapshot_hash, data={'description': desc})

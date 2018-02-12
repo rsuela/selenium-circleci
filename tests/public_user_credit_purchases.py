@@ -97,8 +97,13 @@ class PublicUserPurchaseTransactions(unittest.TestCase):
             print "Submitting form"
             self.driver.find_element_by_id("check_out_buy_now_button").click()
             
-            WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "checkoutResultSucess")))
+            self.cf.wait_till_visible(self.driver.find_elements_by_id("checkoutResultSucess"))
+            result_msg = "Thank you for your purchase. Please check your email inbox for further details."
             print "Result Message: %s"%(self.driver.find_element_by_xpath("//span[@id='Seamless_ReportBugForm_expected_results']/span[@class='seamless-view msgForNonLoggedIn']").text.encode('ascii', 'ignore'))
+            self.assertEqual(result_msg, self.driver.find_element_by_xpath("//span[@id='Seamless_ReportBugForm_expected_results']/span[@class='seamless-view msgForNonLoggedIn']").text.encode('ascii', 'ignore'))
+            
+            # go to admin and check balance
+            
             self.test_result = 'pass'
 
         except AssertionError as e:
